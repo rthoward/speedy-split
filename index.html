@@ -3,6 +3,7 @@
    <title>SpeedySplit</title>
 
    <link href="js/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+   <link href="css/site.css" rel="stylesheet">
 </head>
 <body ng-app="SpeedySplit" ng-controller="SpacePressedController">
 
@@ -13,16 +14,16 @@
       <div class="row" ng-controller="SplitTimerController">
          <div class="col-md-4">
 
-         <table ng-table="tableParams" class="table table-striped">
-            <tr ng-repeat="split in splits">
-               <td data-title="'Name'">{{split.name}}</td>
-               <td data-title="'Time'">{{split.time}}</td>
-            </tr>
-         </table>
+            <table ng-table="tableParams" class="table">
+               <tr ng-repeat="split in splits">
+                  <td data-title="'Name'">{{split.name}}</td>
+                  <td data-title="'Time'">{{split.time}}</td>
+               </tr>
+            </table>
 
-         <div class="timer">
-            <timer autostart="false">{{minutes}}:{{seconds}}.{{millis}}</timer>
-         </div>
+            <div class="timer text-center">
+               <timer autostart="false">{{minutes}}:{{seconds}}.{{millis}}</timer>
+            </div>
 
          </div>
       </div>

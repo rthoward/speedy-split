@@ -11,7 +11,8 @@
 
       $scope.timerRunning = false;
       $scope.splits = [
-         { name: "Majula Bonfire", time: "1:00" }
+         { name: "Majula Bonfire", time: "2:37" },
+         { name: "Forest Bonfire", time: "5:01" }
       ];
 
       var toggleTimer = function() {
