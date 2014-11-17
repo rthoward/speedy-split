@@ -9,12 +9,36 @@
 
    var splitTimerController = function($scope) {
 
+      $scope.timerRunning = false;
       $scope.splits = [
          { name: "Majula Bonfire", time: "1:00" }
       ];
 
+      var toggleTimer = function() {
+         if ($scope.timerRunning) {
+            stopTimer(); 
+         }
+         else {
+            startTimer();
+         }
+      };
+
+      var startTimer = function() {
+         $scope.timerRunning = true;
+         $scope.$broadcast('timer-start');
+
+         console.log('timer started');
+      };
+
+      var stopTimer = function() {
+         $scope.timerRunning = false;
+         $scope.$broadcast('timer-stop');
+
+         console.log('timer-stopped');
+      }
+
       $scope.$on('space', function() {
-         console.log("space hit");
+         toggleTimer();
       });
    };
 
