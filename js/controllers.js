@@ -11,13 +11,18 @@
 
       $scope.timerRunning = false;
       $scope.splits = [
-         { name: "Majula Bonfire", time: "2:37" },
-         { name: "Forest Bonfire", time: "5:01" }
+         { name: "Majula Bonfire", previousTime: "2:37", currentTime: "" },
+         { name: "Forest Bonfire", previousTime: "5:01", currentTime: "" }
       ];
+      var activeSplit = 0;
 
-      var toggleTimer = function() {
+      $scope.currentSplit = function() {
+         return $scope.splits[activeSplit];
+      };
+
+      var advanceTimer = function() {
          if ($scope.timerRunning) {
-            stopTimer(); 
+            nextSplit(); 
          }
          else {
             startTimer();
@@ -38,8 +43,16 @@
          console.log('timer-stopped');
       }
 
+      var nextSplit = function() {
+         $scope.$broadcast('timer-poll')
+      };
+
       $scope.$on('space', function() {
-         toggleTimer();
+         advanceTimer();
+      });
+
+      $scope.$on('timer-update', function(x, data) {
+         console.log(data);
       });
    };
 

@@ -62,6 +62,10 @@ var timerModule = angular.module('timer', [])
           $scope.clear();
         });
 
+        $scope.$on('timer-poll', function() {
+          $scope.poll();
+        });
+
         $scope.$on('timer-set-countdown', function (e, countdown) {
           $scope.countdown = countdown;
         });
@@ -97,6 +101,10 @@ var timerModule = angular.module('timer', [])
           var timeoutId = $scope.timeoutId;
           $scope.clear();
           $scope.$emit('timer-stopped', {timeoutId: timeoutId, millis: $scope.millis, seconds: $scope.seconds, minutes: $scope.minutes, hours: $scope.hours, days: $scope.days});
+        };
+
+        $scope.poll = function() {
+           $scope.$emit('timer-update', { millis: $scope.millis, seconds: $scope.seconds, minutes: $scope.minutes, hours: $scope.hours, days: $scope.days });
         };
 
         $scope.clear = $element[0].clear = function () {
