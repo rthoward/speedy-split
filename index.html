@@ -14,8 +14,8 @@
       <div class="row" ng-controller="SplitTimerController">
          <div class="col-md-4">
 
-            <table ng-table="tableParams" class="table">
-               <tr ng-repeat="split in splits">
+            <table ng-table="tableParams" class="table table-bordered">
+               <tr ng-repeat="split in splits" ng-class="split === currentSplit() ? 'active' : ''">
                   <td data-title="'Name'">{{split.name}}</td>
                   <td data-title="'Time'">{{split.time}}</td>
                </tr>
@@ -35,6 +35,6 @@
    <script src="js/bower_components/angular/angular.js"></script>
    <script src="js/bower_components/angular-timer/dist/angular-timer.js"></script>
    <script src="js/bower_components/ng-table/ng-table.js"></script>
-   <script src="js/controllers.js"></script>   
+   <script src="js/controllers.js"></script>
 </body>
 </html>
