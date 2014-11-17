@@ -4,28 +4,28 @@
 
    <link href="js/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 </head>
-<body>
-   
-   <div class="container" ng-app="SpeedySplit">
+<body ng-app="SpeedySplit">
+
+   <div class="container">
 
       <h1>SpeedySplit!</h1>
 
-      <div class="row" ng-controller="SplitTimerController" ng-space="pressed()">
+      <div class="row" ng-controller="SplitTimerController">
          <div class="col-md-4">
-            
+
          <table ng-table="tableParams" class="table table-striped">
             <tr ng-repeat="split in splits">
                <td data-title="'Name'">{{split.name}}</td>
                <td data-title="'Time'">{{split.time}}</td>
-            </tr>            
+            </tr>
          </table>
 
-         <div class="timer">            
-            <timer>{{minutes}}:{{seconds}}</timer>           
+         <div class="timer">
+            <timer>{{minutes}}:{{seconds}}</timer>
          </div>
 
          </div>
-      </div>      
+      </div>
 
    </div> <!-- container -->
 
