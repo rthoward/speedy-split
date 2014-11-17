@@ -10,19 +10,20 @@
 
       <h1>SpeedySplit!</h1>
 
-      <div class="row">
+      <div class="row" ng-controller="SplitTimerController" ng-space="pressed()">
          <div class="col-md-4">
-            <table class="table table-striped" ng-controller="SplitTimerController">
-               <tr>
-                  <td>Majula Bonfire</td>
-                  <td>2:37</td>
-               </tr>
-               <tr>
-                  <td>
-                     <timer start-time="00"></timer>
-                  </td>
-               </tr>
-            </table>
+            
+         <table ng-table="tableParams" class="table table-striped">
+            <tr ng-repeat="split in splits">
+               <td data-title="'Name'">{{split.name}}</td>
+               <td data-title="'Time'">{{split.time}}</td>
+            </tr>            
+         </table>
+
+         <div class="timer">            
+            <timer>{{minutes}}:{{seconds}}</timer>           
+         </div>
+
          </div>
       </div>      
 
@@ -32,6 +33,8 @@
    <script src="js/bower_components/bootstrap/dist/js/bootstrap.js"></script>
    <script src="js/bower_components/angular/angular.js"></script>
    <script src="js/bower_components/angular-timer/dist/angular-timer.js"></script>
+   <script src="js/bower_components/ng-table/ng-table.js"></script>
    <script src="js/controllers.js"></script>
+   <script src="js/directives.js"></script>
 </body>
 </html>
