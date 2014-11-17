@@ -1,16 +1,37 @@
 <html>
-   <head>
-      <title>SpeedySplit</title>
+<head>
+   <title>SpeedySplit</title>
 
-      <link href="js/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-   </head>
-   <body>
-      
-      <h1>Hello World</h1>
+   <link href="js/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+   
+   <div class="container" ng-app="SpeedySplit">
 
-      <script src="js/bower_components/jquery/dist/jquery.js"></script>
-      <script src="js/bower_components/bootstrap/dist/js/bootstrap.js"></script>
-      <script src="js/bower_components/angular/angular.js"></script>
-      <script src="js/bower_components/angular-timer/dist/angular-timer.js"></script>
-   </body>
+      <h1>SpeedySplit!</h1>
+
+      <div class="row">
+         <div class="col-md-4">
+            <table class="table table-striped" ng-controller="SplitTimerController">
+               <tr>
+                  <td>Majula Bonfire</td>
+                  <td>2:37</td>
+               </tr>
+               <tr>
+                  <td>
+                     <timer start-time="00"></timer>
+                  </td>
+               </tr>
+            </table>
+         </div>
+      </div>      
+
+   </div> <!-- container -->
+
+   <script src="js/bower_components/jquery/dist/jquery.js"></script>
+   <script src="js/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+   <script src="js/bower_components/angular/angular.js"></script>
+   <script src="js/bower_components/angular-timer/dist/angular-timer.js"></script>
+   <script src="js/controllers.js"></script>
+</body>
 </html>
