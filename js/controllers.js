@@ -10,10 +10,10 @@
    var splitTimerController = function($scope) {
 
       $scope.timerRunning = false;
-      $scope.splits = [
-         { name: "Majula Bonfire", previousTime: time('2:37.000'), currentTime: "" },
-         { name: "Forest Bonfire", previousTime: time('5:01.043'), currentTime: "" }
-      ];
+      // $scope.splits = [
+      //    { name: "Majula Bonfire", previousTime: time('2:37.000'), currentTime: "" },
+      //    { name: "Forest Bonfire", previousTime: time('5:01.043'), currentTime: "" }
+      // ];
       var activeSplit = -1;
       var lastSplitTime = moment().subtract(5, 'seconds');
 

@@ -14,17 +14,25 @@
       <div class="row" ng-controller="SplitTimerController">
          <div class="col-md-4">
 
-            <table ng-table="tableParams" class="table table-bordered">
-               <tr ng-repeat="split in splits" ng-class="split === currentSplit() ? 'active' : ''">
-                  <td data-title="'Name'">{{split.name}}</td>
-                  <td data-title="'Current'">{{displayTime(split.currentTime)}}</td>
-                  <td data-title="'Previous'">{{displayTime(split.previousTime)}}</td>
-               </tr>
-            </table>
-
-            <div class="timer text-center">
-               <timer autostart="false">{{minutes}}:{{seconds}}.{{millis}}</timer>
+            <!-- new split form -->
+            <div ng-if="!splits">
+               <div ng-include="'templates/new_split.html'"></div>
             </div>
+
+            <!-- split timer -->
+            <div ng-if="splits">
+               <table ng-table="tableParams" class="table table-bordered">
+                  <tr ng-repeat="split in splits" ng-class="split === currentSplit() ? 'active' : ''">
+                     <td data-title="'Name'">{{split.name}}</td>
+                     <td data-title="'Current'">{{displayTime(split.currentTime)}}</td>
+                     <td data-title="'Previous'">{{displayTime(split.previousTime)}}</td>
+                  </tr>
+               </table>
+
+               <div class="timer text-center">
+                  <timer autostart="false">{{minutes}}:{{seconds}}.{{millis}}</timer>
+               </div>
+            </div>           
 
          </div>
       </div>
