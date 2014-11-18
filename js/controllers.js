@@ -3,21 +3,28 @@
       'timer'      
    ]);
 
-   var keypress = function(event) {
-      console.log(event.which);
+   var time = function(timeString) {      
+      return moment(timeString, 'm:ss.SSS');
    };
 
    var splitTimerController = function($scope) {
 
       $scope.timerRunning = false;
       $scope.splits = [
-         { name: "Majula Bonfire", previousTime: "2:37", currentTime: "" },
-         { name: "Forest Bonfire", previousTime: "5:01", currentTime: "" }
+         { name: "Majula Bonfire", previousTime: time('2:37.000'), currentTime: "" },
+         { name: "Forest Bonfire", previousTime: time('5:01.043'), currentTime: "" }
       ];
-      var activeSplit = 0;
+      var activeSplit = -1;
+      var lastSplitTime = moment().subtract(5, 'seconds');
 
       $scope.currentSplit = function() {
          return $scope.splits[activeSplit];
+      };
+
+      $scope.displayTime = function(time) {
+         if (time === '') { return '--------'; }
+
+         return time.format('m:ss.SSS');
       };
 
       var advanceTimer = function() {
@@ -31,28 +38,56 @@
 
       var startTimer = function() {
          $scope.timerRunning = true;
-         $scope.$broadcast('timer-start');
-
-         console.log('timer started');
+         $scope.$broadcast('timer-start');         
       };
 
       var stopTimer = function() {
          $scope.timerRunning = false;
-         $scope.$broadcast('timer-stop');
-
-         console.log('timer-stopped');
-      }
+         $scope.$broadcast('timer-stop');         
+      }      
 
       var nextSplit = function() {
-         $scope.$broadcast('timer-poll')
+
+         activeSplit += 1;
+
+         // if this is the last split, then we should stop the timer
+         if (activeSplit == $scope.splits.length) {
+            stopTimer();
+            return;
+         }
+         
+         $scope.$broadcast('timer-poll');         
+         console.log('nextSplit called');
+      };
+
+      var isBounce = function(time) {
+         var now = moment();
+         var bounce = !(lastSplitTime.add(500, 'milliseconds').isBefore(now));
+
+         if (!bounce) {
+            lastSplitTime = now;   
+         }
+         
+         return bounce;
       };
 
       $scope.$on('space', function() {
+         // a debounce guard
+         if (isBounce()) { return; }
+         
+         console.log("split advanced");
          advanceTimer();
       });
 
       $scope.$on('timer-update', function(x, data) {
-         console.log(data);
+         var millis = data.millis % 1000;
+         var timeStr = data.minutes + ":" + data.seconds + "." + millis;
+
+         $scope.splits[activeSplit].currentTime = time(timeStr);
+
+         console.log('timer-update called');
+
+         $scope.$apply();
       });
    };
 
