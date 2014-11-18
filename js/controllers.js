@@ -18,7 +18,7 @@
       var lastSplitTime = moment().subtract(5, 'seconds');
 
       $scope.currentSplit = function() {
-         return $scope.splits[activeSplit];
+         return $scope.splits[activeSplit + 1];
       };
 
       $scope.displayTime = function(time) {
