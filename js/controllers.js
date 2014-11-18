@@ -7,6 +7,35 @@
       return moment(timeString, 'm:ss.SSS');
    };
 
+   var newSplitController = function($scope) {
+
+
+      $scope.newSplits = [
+         { id: 0, name: '', previousTime: null, currentTime: null }
+      ];
+      $scope.numSplits = 1;
+
+      $scope.isValidSplit = function() {
+         return false;
+      };
+
+      $scope.addSplit = function() {
+         $scope.numSplits += 1;
+
+         $scope.newSplits.push({
+            id: $scope.numSplits, name: '', previousTime: null, currentTime: null
+         });
+      };
+
+      $scope.finalizeSplit = function() {
+         $scope.$broadcast()
+      };
+
+      $scope.keyPress = function(event) {
+         console.log("pressed");
+      };
+   };
+
    var splitTimerController = function($scope) {
 
       $scope.timerRunning = false;
@@ -97,6 +126,8 @@
 
    app.controller("SplitTimerController",
       ["$scope", splitTimerController]);
+   app.controller("NewSplitController",
+      ["$scope", newSplitController]);
    app.controller("SpacePressedController",
       ["$scope", "$document", spacePressedController]);
 })();
