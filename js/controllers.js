@@ -51,7 +51,7 @@
          activeSplit += 1;
 
          // if this is the last split, then we should stop the timer
-         if (activeSplit == $scope.splits.length) {
+         if (activeSplit == ($scope.splits.length - 1) ) {
             stopTimer();
             return;
          }
