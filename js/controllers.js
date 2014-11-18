@@ -1,14 +1,11 @@
 (function(){
-   var app = angular.module("SpeedySplit", [
-      'timer'
-   ]);
 
    var time = function(timeString) {
       return moment(timeString, 'm:ss.SSS');
    };
 
-   var newSplitController = function($scope) {
-
+   angular.module('speedySplit.newSplitController', []).
+      controller('NewSplitController', function($scope) {
 
       $scope.newSplits = [
          { id: 0, name: '', previousTime: null, currentTime: null }
@@ -34,15 +31,16 @@
       $scope.keyPress = function(event) {
          console.log("pressed");
       };
-   };
+   });
 
-   var splitTimerController = function($scope) {
+   angular.module('speedySplit.splitTimerController', []).
+      controller('SplitTimerController', function($scope) {
 
       $scope.timerRunning = false;
-      // $scope.splits = [
-      //    { name: "Majula Bonfire", previousTime: time('2:37.000'), currentTime: "" },
-      //    { name: "Forest Bonfire", previousTime: time('5:01.043'), currentTime: "" }
-      // ];
+      $scope.splits = [
+         { name: "Majula Bonfire", previousTime: time('2:37.000'), currentTime: "" },
+         { name: "Forest Bonfire", previousTime: time('5:01.043'), currentTime: "" }
+      ];
       var activeSplit = -1;
       var lastSplitTime = moment().subtract(5, 'seconds');
 
@@ -114,20 +112,16 @@
 
          $scope.$apply();
       });
-   };
+   });
 
-   var spacePressedController = function($scope, $document) {
+   angular.module('speedySplit.spacePressedController', []).
+      controller('SpacePressedController', ['$scope', '$document', function($scope, $document) {
+
       $document.bind('keypress', function(event) {
          if (event.which === 32) {
             $scope.$broadcast('space');
          }
       });
-   };
+   }]);
 
-   app.controller("SplitTimerController",
-      ["$scope", splitTimerController]);
-   app.controller("NewSplitController",
-      ["$scope", newSplitController]);
-   app.controller("SpacePressedController",
-      ["$scope", "$document", spacePressedController]);
 })();
