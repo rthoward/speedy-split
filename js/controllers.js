@@ -1,9 +1,9 @@
 (function(){
    var app = angular.module("SpeedySplit", [
-      'timer'      
+      'timer'
    ]);
 
-   var time = function(timeString) {      
+   var time = function(timeString) {
       return moment(timeString, 'm:ss.SSS');
    };
 
@@ -29,7 +29,7 @@
 
       var advanceTimer = function() {
          if ($scope.timerRunning) {
-            nextSplit(); 
+            nextSplit();
          }
          else {
             startTimer();
@@ -38,13 +38,13 @@
 
       var startTimer = function() {
          $scope.timerRunning = true;
-         $scope.$broadcast('timer-start');         
+         $scope.$broadcast('timer-start');
       };
 
       var stopTimer = function() {
          $scope.timerRunning = false;
-         $scope.$broadcast('timer-stop');         
-      }      
+         $scope.$broadcast('timer-stop');
+      }
 
       var nextSplit = function() {
 
@@ -55,9 +55,8 @@
             stopTimer();
             return;
          }
-         
-         $scope.$broadcast('timer-poll');         
-         console.log('nextSplit called');
+
+         $scope.$broadcast('timer-poll');
       };
 
       var isBounce = function(time) {
@@ -65,17 +64,16 @@
          var bounce = !(lastSplitTime.add(500, 'milliseconds').isBefore(now));
 
          if (!bounce) {
-            lastSplitTime = now;   
+            lastSplitTime = now;
          }
-         
+
          return bounce;
       };
 
       $scope.$on('space', function() {
          // a debounce guard
          if (isBounce()) { return; }
-         
-         console.log("split advanced");
+
          advanceTimer();
       });
 
@@ -84,8 +82,6 @@
          var timeStr = data.minutes + ":" + data.seconds + "." + millis;
 
          $scope.splits[activeSplit].currentTime = time(timeStr);
-
-         console.log('timer-update called');
 
          $scope.$apply();
       });
