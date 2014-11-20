@@ -62,8 +62,6 @@
             } else {
                $scope.$broadcast('timer-poll');
             }
-         } else {
-            $scope.$broadcast('timer-stop');
          }
       };
 
@@ -91,6 +89,11 @@
          var timeStr = data.minutes + ":" + data.seconds + "." + millis;
 
          splitTimer.updateSplit(timeStr);
+
+         if (splitTimer.done()) {
+            $scope.$broadcast('timer-stop');
+         }
+
          $scope.$apply();
       });
    }]);
