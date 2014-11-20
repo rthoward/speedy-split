@@ -1,5 +1,7 @@
 (function() {
-   angular.module('speedySplit', [      
-      'speedySplit.controllers'
+   angular.module('speedySplit', [
+      'timer',
+      'speedySplit.controllers',
+      'speedySplit.splitTimerService'
    ]);
 })();

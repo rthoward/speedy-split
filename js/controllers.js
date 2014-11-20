@@ -36,20 +36,18 @@
       };
    }]);
 
-   module.controller('SplitTimerController', [ '$scope', function($scope) {
+   module.controller('SplitTimerController', [ '$scope', 'splitTimer', function($scope, splitTimer) {
 
-      $scope.timerRunning = false;
-      $scope.splits = [
-         { name: "Majula Bonfire", previousTime: time('2:37.000'), currentTime: "" },
-         { name: "Forest Bonfire", previousTime: time('5:01.043'), currentTime: "" }
-      ];
-      var activeSplit = -1;
+      var timerRunning = false;
       var lastSplitTime = moment().subtract(5, 'seconds');
 
+      $scope.splits = splitTimer.getSplits();
+
       $scope.currentSplit = function() {
-         return $scope.splits[activeSplit + 1];
+         return splitTimer.currentSplit();
       };
 
+      // todo: consider making this a custom filter
       $scope.displayTime = function(time) {
          if (time === '') { return '--------'; }
 
@@ -57,61 +55,42 @@
       };
 
       var advanceTimer = function() {
-         if ($scope.timerRunning) {
-            nextSplit();
-         }
-         else {
-            startTimer();
+         if (!splitTimer.done()) {
+            if (!timerRunning) {
+               $scope.$broadcast('timer-start');
+               timerRunning = true;
+            } else {
+               $scope.$broadcast('timer-poll');
+            }
+         } else {
+            $scope.$broadcast('timer-stop');
          }
       };
 
-      var startTimer = function() {
-         $scope.timerRunning = true;
-         $scope.$broadcast('timer-start');
-      };
-
-      var stopTimer = function() {
-         $scope.timerRunning = false;
-         $scope.$broadcast('timer-stop');
-      }
-
-      var nextSplit = function() {
-
-         activeSplit += 1;
-
-         // if this is the last split, then we should stop the timer
-         if (activeSplit == ($scope.splits.length - 1) ) {
-            stopTimer();
-            return;
-         }
-
-         $scope.$broadcast('timer-poll');
-      };
-
-      var isBounce = function(time) {
+      var debounce = function() {
          var now = moment();
-         var bounce = !(lastSplitTime.add(500, 'milliseconds').isBefore(now));
+         var bounce = !(lastSplitTime.clone().
+            add(1, 'second').isBefore(now));
 
          if (!bounce) {
             lastSplitTime = now;
          }
 
-         return bounce;
+         return !bounce;
       };
 
       $scope.$on('space', function() {
-         // a debounce guard
-         if (isBounce()) { return; }
-
          advanceTimer();
       });
 
       $scope.$on('timer-update', function(x, data) {
+         // debounce filter
+         if (!debounce()) { return; }
+
          var millis = data.millis % 1000;
          var timeStr = data.minutes + ":" + data.seconds + "." + millis;
 
-         $scope.splits[activeSplit].currentTime = time(timeStr);
-
+         splitTimer.updateSplit(timeStr);
          $scope.$apply();
       });
    }]);
@@ -124,5 +103,5 @@
             $scope.$broadcast('space');
          }
       });
-   }]);   
+   }]);
 })();
