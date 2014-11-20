@@ -5,50 +5,50 @@
 
    module.factory('splitTimer', function() {
 
-      var toTime = function(timeString) {
-         return moment(timeString, 'm:ss.SSS');
-      };
-
-      var _splits = [
-         { name: "Majula Bonfire", previousTime: toTime('2:37.000'), currentTime: "" },
-         { name: "Forest Bonfire", previousTime: toTime('5:01.043'), currentTime: "" }
-      ];
-
+      var _splits = null;
       var _timerRunning = false;
       var _currentSplit = 0;
+      var splitCallbacks = [];
 
-      var setSplits = function(newSplit) {
-         _splits = newSplit;
+      var onSplitUpdate = function(callback) {
+         splitCallbacks.push(callback);
       };
 
-      var getSplits = function() {
-         return _splits;
+      var notifyListeners = function() {
+         splitCallbacks.forEach(function(callback) {
+            callback(_splits);
+         });
       };
 
-      var hasSplits = function() {
-         return _splits != null;
-      };
+      var toTime = function(timeString) {
+         return moment(timeString, 'm:ss.SSS');
+      };     
 
       var currentSplit = function() {
          return _splits[_currentSplit];
       };
 
+      var setSplits = function(newSplits) {
+         _splits = newSplits;
+         notifyListeners();
+      };
+
       var done = function() {
-         return _currentSplit >= _splits.length;
+         return _splits === null 
+                || _currentSplit >= _splits.length
       };
 
       var updateSplit = function(time) {
          _splits[_currentSplit].currentTime = toTime(time);
-         _currentSplit += 1;
+         _currentSplit += 1;   
       };
 
       return {
-         hasSplits: hasSplits,
          setSplits: setSplits,
-         getSplits: getSplits,
          currentSplit: currentSplit,
          updateSplit: updateSplit,
-         done: done
+         done: done,
+         onSplitUpdate: onSplitUpdate
       };
 
    });
