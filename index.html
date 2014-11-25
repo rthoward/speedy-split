@@ -33,8 +33,11 @@
                   <timer autostart="false">{{minutes}}:{{seconds}}.{{millis}}</timer>
                </div>
 
-               <div ng-if="timerFinished">
-                  <button type="button" class="button button-default">Export</button> 
+               <div ng-if="timerFinished" ng-controller="ExportSplitController">
+                  <button type="button" class="button button-default" ng-click="exportSplits()">Export</button>
+                  <div ng-if="exportedData">
+                     <pre>{{exportedData}}</pre>
+                  </div>
                </div>
             </div>
 

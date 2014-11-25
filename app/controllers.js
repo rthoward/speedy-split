@@ -107,4 +107,12 @@
          }
       });
    }]);
+
+   module.controller('ExportSplitController', [ '$scope', 'splitTimer', function($scope, splitTimer) {
+      $scope.exportedData = null;
+
+      $scope.exportSplits = function() {
+         $scope.exportedData = angular.toJson(splitTimer.getSplits(), true);
+      };
+   }]);
 })();

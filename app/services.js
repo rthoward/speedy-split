@@ -33,6 +33,10 @@
          notifyListeners();
       };
 
+      var getSplits = function() {
+         return _splits;
+      };
+
       var done = function() {
          return _splits === null 
                 || _currentSplit >= _splits.length
@@ -45,6 +49,7 @@
 
       return {
          setSplits: setSplits,
+         getSplits: getSplits,
          currentSplit: currentSplit,
          updateSplit: updateSplit,
          done: done,
