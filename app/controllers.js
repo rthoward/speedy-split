@@ -36,6 +36,7 @@
       var lastSplitTime = moment().subtract(5, 'seconds');
 
       $scope.splits = null;
+      $scope.timerFinished = false;
       splitTimer.onSplitUpdate(function(split) {
          $scope.splits = split;
          console.log($scope.splits);
@@ -90,6 +91,7 @@
 
          if (splitTimer.done()) {
             $scope.$broadcast('timer-stop');
+            $scope.timerFinished = true;
          }
 
          $scope.$apply();
