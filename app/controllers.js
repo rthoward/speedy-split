@@ -11,7 +11,7 @@
       $scope.newSplits = [
          { id: 0, name: '', previousTime: null, currentTime: null }
       ];
-      $scope.numSplits = 1;      
+      $scope.numSplits = 1;
 
       $scope.isValidSplit = function() {
          return false;
@@ -27,7 +27,7 @@
 
       $scope.finalizeSplit = function() {
          splitTimer.setSplits($scope.newSplits);
-      };      
+      };
    }]);
 
    module.controller('SplitTimerController', [ '$scope', 'splitTimer', function($scope, splitTimer) {

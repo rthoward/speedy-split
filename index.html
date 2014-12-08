@@ -35,7 +35,7 @@
 
                <div ng-if="timerFinished" ng-controller="ExportSplitController">
                   <button type="button" class="button button-default" ng-click="exportSplits()">Export</button>
-                  <div ng-if="exportedData">
+                  <div ng-if="exportedData" class="export-data">
                      <pre>{{exportedData}}</pre>
                   </div>
                </div>
